@@ -4,6 +4,7 @@ import dbConnection from "./dataBase/db.js";
 import dotenv from "dotenv";
 import adminRoute from "./routes/adminRoute.js";
 import projectRoute from "./routes/projectRoute.js";
+import contactRoute from "./routes/contactRoute.js"
 
 import cookieParser from "cookie-parser";
 
@@ -26,6 +27,8 @@ app.get("/", (req, res) => {
 
 app.use("/api/v1/admin",adminRoute);
 app.use("/api/v2/project",projectRoute);
+app.use("/api/v3/contact",contactRoute);
+
 
 
 const port = 8000;
