@@ -1,42 +1,162 @@
-import React from 'react';
-import { useSpring, animated } from '@react-spring/web';
-import { Link } from 'react-router-dom';
-
-const projects = [
-  { id: 1, title: "Project 1", description: "Description for project 1", link: "/project1" },
-  { id: 2, title: "Project 2", description: "Description for project 2", link: "/project2" },
-  { id: 3, title: "Project 3", description: "Description for project 3", link: "/project3" },
-];
-
-const ProjectCard = () => {
-  const cardSpring = useSpring({
-    from: { transform: 'scale(0.9)', opacity: 0 },
-    to: { transform: 'scale(1)', opacity: 1 },
-    config: { tension: 170, friction: 20 },
-  });
-
-  return (
-    <animated.div style={cardSpring} className="relative bg-white dark:bg-gray-800 p-6 rounded-lg shadow-lg transform transition-transform hover:scale-105 duration-300">
-      <h3 className="text-xl font-bold mb-2 text-gray-900 dark:text-white">project.title</h3>
-      <p className="text-gray-600 dark:text-gray-300 mb-4">project.description</p>
-      <Link to="{/project}" className="text-blue-500 hover:text-blue-700 underline">
-        View Project
-      </Link>
-    </animated.div>
-  );
-};
+import React, { useState, useEffect } from "react";
+import { useAdmin } from "@/contexts/publicViewContext";
+import { useTheme } from "@/contexts/themeContext";
+import { NeonGradientCard } from "./magicui/neon-gradient-card";
+import ProjectDialog from "./ProjectDialog";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { format } from "date-fns"; // For formatting dates
 
 const Project = () => {
+  const { projects } = useAdmin(); // Fetching projects
+  const { isDarkMode } = useTheme(); // Fetching theme context
+  const [sortedProjects, setSortedProjects] = useState([]); // To store sorted projects
+  const [isDialogOpen, setDialogOpen] = useState(false);
+  const [selectedProject, setSelectedProject] = useState(null);
+  const [sortOption, setSortOption] = useState("date");
+
+  useEffect(() => {
+    // Sort projects based on the selected sort option
+    const sortProjects = (option) => {
+      let sortedArray = [...projects];
+      if (option === "new") {
+        sortedArray.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+      } else if (option === "old") {
+        sortedArray.sort(
+          (a, b) => new Date(a.createdAt) - new Date(b.createdAt)
+        );
+      } else if (option === "beginner") {
+        sortedArray = sortedArray.filter(
+          (project) => project.difficulty === "beginner"
+        );
+      }
+      setSortedProjects(sortedArray);
+    };
+
+    sortProjects(sortOption);
+  }, [projects, sortOption]);
+
+  const openDialog = (project) => {
+    setSelectedProject(project);
+    setDialogOpen(true);
+  };
+
+  const closeDialog = () => {
+    setDialogOpen(false);
+    setSelectedProject(null);
+  };
+
   return (
-    <div className="relative w-full max-w-4xl mx-auto py-8 px-4">
-      <h2 className="text-3xl font-bold text-center mb-8 text-gray-900 dark:text-white">My Projects</h2>
-      <div className="flex gap-4 overflow-x-auto scrollbar-hide">
-        {projects.map((project) => (
-          <div key={project.id} className="flex-shrink-0 w-full md:w-1/3">
-            <ProjectCard project={project} />
-          </div>
-        ))}
+    <div
+      className={`mt-20 min-h-screen ${
+        isDarkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"
+      }`}
+    >
+      <div className="container mt-8 mx-auto p-4">
+        
+
+        {/* Sorting Dropdown */}
+        <div className="mb-6">
+          <Select onValueChange={(value) => setSortOption(value)}>
+            <SelectTrigger className="w-[180px]">
+              <SelectValue placeholder="Sort Projects" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectGroup>
+                <SelectLabel>Sort by</SelectLabel>
+                <SelectItem value="new">Newest First</SelectItem>
+                <SelectItem value="old">Oldest First</SelectItem>
+                <SelectItem value="beginner">Beginner Projects</SelectItem>
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        </div>
+
+        {/* My Projects Heading */}
+        <div className="flex justify-center items-center mb-8">
+          <h1
+            className="text-4xl font-bold animate-bounce text-center"
+            style={{ animationDuration: "1.5s" }}
+          >
+            My Projects
+          </h1>
+        </div>
+
+        {/* Project Cards */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {sortedProjects && sortedProjects.length > 0 ? (
+            sortedProjects.map((project) =>
+              project ? (
+                <NeonGradientCard
+                  key={project._id}
+                  className={`max-w-sm text-center flex flex-col items-center justify-center ${
+                    isDarkMode ? "bg-gray-800" : "bg-white"
+                  }`}
+                  onClick={() => openDialog(project)}
+                >
+                  <img
+                    src={
+                      project.projectImage || "https://via.placeholder.com/150"
+                    }
+                    alt={project.projectName || "Project Image"}
+                    className="h-40 w-full object-cover mb-4 rounded-lg"
+                  />
+                  <h3
+                    className={`text-lg font-bold mb-2 bg-gradient-to-br from-[#ff2975] to-[#00FFF1] bg-clip-text text-transparent`}
+                  >
+                    {project.projectName || "Untitled Project"}
+                  </h3>
+                  <p
+                    className={`mb-2 ${
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    {project.projectDescription || "No description available."}
+                  </p>
+                  <a
+                    href={project.projectLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-500 hover:underline"
+                  >
+                    {project.projectLink ? "Project Link" : "No link available"}
+                  </a>
+                  <p
+                    className={`mb-2 ${
+                      isDarkMode ? "text-gray-300" : "text-gray-700"
+                    }`}
+                  >
+                    {project.createdAt
+                      ? format(new Date(project.createdAt), "yyyy-MM-dd")
+                      : "No date available"}
+                  </p>
+                </NeonGradientCard>
+              ) : null
+            )
+          ) : (
+            <p>No projects available.</p>
+          )}
+        </div>
       </div>
+
+      {/* Project Dialog */}
+      <ProjectDialog
+        isOpen={isDialogOpen}
+        onClose={closeDialog}
+        title={selectedProject?.projectName}
+        description={selectedProject?.projectDescription}
+        image={selectedProject?.projectImage}
+        link={selectedProject?.projectLink}
+      />
     </div>
   );
 };

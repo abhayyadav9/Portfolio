@@ -1,11 +1,17 @@
+import GradualSpacing from "@/components/magicui/gradual-spacing";
 import ShineBorder from "@/components/magicui/shine-border";
 import { useSpring, animated } from "@react-spring/web";
 import { useTheme } from "../contexts/ThemeContext";
 import { BorderBeam } from "./magicui/border-beam";
 import TypingAnimation from "./magicui/typing-animation";
+import { useAdmin } from "@/contexts/publicViewContext";
+import { Button } from "./ui/button";
+import { Link } from "react-router-dom";
+import Footer from "./Footer";
 
 const Home = () => {
   const { isDarkMode } = useTheme();
+  const { admin } = useAdmin();
 
   // Animation hooks
   const h1Spring = useSpring({
@@ -27,60 +33,81 @@ const Home = () => {
     config: { duration: 1500 },
   });
 
+  if (!admin) {
+    return <div>Loading...</div>; // Handle loading state
+  }
+
   return (
-    <div
-      className={`mt-20 md:mt-10 flex h-screen  items-center justify-center p-2 ${
-        isDarkMode ? "bg-gray-900" : "bg-white"
-      }`}
-    >
-      <ShineBorder
-        className={`flex flex-col-reverse h-[85vh]  mt-14  md:flex-row gap-8 items-center p-2 w-full max-w-6xl rounded-xl shadow-lg ${
-          isDarkMode ? "bg-gray-200" : "bg-gray-50"
+    <>
+      <div
+        className={` flex h-[120vh] items-center justify-center p-2 ${
+          isDarkMode ? "bg-gray-900" : "bg-white"
         }`}
-        style={{ height: isDarkMode ? "70vh" : "auto" }} // Adjust height for desktop view
       >
-        <div className="flex flex-col items-start md:w-2/3">
-          <animated.h1
-            style={h1Spring}
-            className={`text-4xl md:text-9xl font-extrabold mb-4 ${
-              isDarkMode ? "text-white" : "text-gray-900"
+        <div className="mt-0 md:mt-[-80px]">
+          <ShineBorder
+            className={`flex flex-col-reverse h-[100vh] md:h-[80vh] mt-14 md:flex-row gap-8 items-center p-2 w-full max-w-6xl rounded-xl shadow-lg ${
+              isDarkMode ? "bg-gray-200" : "bg-gray-50"
             }`}
+            style={{ height: isDarkMode ? "150vh" : "auto" }} // Adjust height for desktop view
           >
-            <TypingAnimation
-              className="border-none font-bold md:text-7xl text-black dark:text-white"
-              text=" Hi, I’m Abhay Yadav"
-            />
-          </animated.h1>
-          <animated.h3
-            style={pSpring}
-            className={`text-lg md:text-xl font-light mt-4 ${
-              isDarkMode ? "text-gray-300" : "text-gray-700"
-            }`}
-          >
-            I am a Computer Science Engineering student passionate about
-            building innovative solutions. Lorem ipsum dolor sit, amet Lorem
-            ipsum dolor sit amet consectetur adipisicing elit. Assumenda lorem
-            mollitia, sit sunt reiciendis iste facere maiores ab voluptatum
-            harum rerum iure eius et dolorum laudantium dolor distinctio
-            consequatur! Minus, nobis placeat in atque
-          </animated.h3>
+            <div
+              className="flex 
+            flex-col items-start md:w-2/3"
+            >
+              <h1
+                className={`text-4xl  md:text-9xl font-extrabold  ${
+                  isDarkMode ? "text-white" : "text-gray-900"
+                }`}
+              >
+                <TypingAnimation
+                  className="border-none font-bold md:text-7xl text-black dark:text-white"
+                  text=" "
+                />
+                <GradualSpacing
+                  className="font-display text-center text-4xl font-bold tracking-[-0.1em] text-black dark:text-white md:text-7xl md:leading-[5rem]"
+                  text={`${admin.username}`}
+                />
+              </h1>
+              <animated.h3
+                style={pSpring}
+                className={`text-lg md:text-xl font-light mt-2 ${
+                  isDarkMode ? "text-gray-300" : "text-gray-700"
+                }`}
+              >
+                <p className="p-2 md:p-9 text-justify text-lg font-medium">
+                  {admin.bio}
+                </p>
+
+                {/* <div className="flex flex-col">{admin.bio}</div> */}
+                <div className="">
+                  <Button>View my CV..</Button>
+                </div>
+              </animated.h3>
+            </div>
+            <div className="mb-2">
+              <animated.div
+                style={imgSpring}
+                className={`w-40 h-40 md:ml-7 md:w-56 md:h-56 overflow-hidden rounded-full border-4 ${
+                  isDarkMode ? "border-gray-600" : "border-gray-300"
+                } shadow-lg mb-4 md:mb-0`}
+              >
+                <img
+                  src={admin.profilePic || "https://via.placeholder.com/150"}
+                  alt="Profile Pic"
+                  className="w-full h-full object-cover"
+                />
+              </animated.div>
+            </div>
+          </ShineBorder>
+
+         
         </div>
-        <div>
-          <animated.div
-            style={imgSpring}
-            className={`w-40 h-40 md:w-56 md:h-56 overflow-hidden rounded-full border-4 ${
-              isDarkMode ? "border-gray-600" : "border-gray-300"
-            } shadow-lg mb-4 md:mb-0`}
-          >
-            <img
-              src="https://th.bing.com/th/id/OIP.9hthnaf3V46DkaiN-UHlTgHaEo?rs=1&pid=ImgDetMain"
-              alt="Profile Pic"
-              className="w-full h-full object-cover"
-            />
-          </animated.div>
-        </div>
-      </ShineBorder>
-    </div>
+      </div>
+      <div>
+        <Footer />
+      </div>
+    </>
   );
 };
 
@@ -96,7 +123,7 @@ export default Home;
 //       style={h1Spring}
 //       className="text-4xl font-bold mb-4 text-gray-800 dark:text-white"
 //     >
-//      
+//
 //     </animated.h1>
 //     <animated.p
 //       style={pSpring}

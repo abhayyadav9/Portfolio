@@ -3,6 +3,7 @@ import authenticateAdmin from "../middleware/authenticateAdmin.js";
 import upload from "../utils/multer.js";
 import projectControll from "../controller/projectControll.js";
 
+
 const router = express.Router();
 
 // Route for adding a project
@@ -27,5 +28,11 @@ router.get(
   authenticateAdmin,
   projectControll.getAdminProfile
 );
+
+
+router.delete('/deleteproject/:projectId',authenticateAdmin, projectControll.deleteProject);
+
+
+
 
 export default router;

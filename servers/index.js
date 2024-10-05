@@ -13,7 +13,7 @@ const app = express(); // Missing app initialization
 app.use(cookieParser());  // Add cookie-parser middleware here
 
 const corsConfig = {
-  origin: "*",
+  origin: "http://localhost:5173",
   credentials: true,
 };
 

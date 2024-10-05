@@ -1,19 +1,30 @@
 import Contact from "../model/contactSchema.js";
+import cloudinary from "../database/cloudinary.js";
+import getDataUri from "../utils/dataUri.js"; // Helper function to convert image buffer to data URI
 
 // Add a new contact
 export const addContact = async (req, res) => {
   try {
-    const { socialMedia, socialLink } = req.body;
+    const { socialMedia, socialLink, tagline } = req.body;
+    const icon = req.file; // Assuming the icon image is sent as a file
 
-    // Validate input
     if (!socialMedia || !socialLink) {
       return res.status(400).json({ message: "All fields are required", success: false });
+    }
+
+    let iconUrl;
+    if (icon) {
+      const fileUri = getDataUri(icon);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri);
+      iconUrl = cloudResponse.secure_url;
     }
 
     // Create new contact
     const contact = await Contact.create({
       socialMedia,
       socialLink,
+      tagline,
+      icon: iconUrl || "", // Use the uploaded icon URL or an empty string
     });
 
     res.status(201).json({
@@ -34,22 +45,32 @@ export const addContact = async (req, res) => {
 export const editContact = async (req, res) => {
   try {
     const { contactId } = req.params;
-    const { socialMedia, socialLink } = req.body;
+    const { socialMedia, socialLink, tagline } = req.body;
+    const icon = req.file; // Assuming the icon image is sent as a file
 
-    const updatedContact = await Contact.findByIdAndUpdate(
-      contactId,
-      { socialMedia, socialLink },
-      { new: true, runValidators: true }
-    );
-
-    if (!updatedContact) {
+    // Find and update the contact
+    const contact = await Contact.findById(contactId);
+    if (!contact) {
       return res.status(404).json({ message: "Contact not found", success: false });
     }
+
+    // Update fields if provided
+    if (socialMedia) contact.socialMedia = socialMedia;
+    if (socialLink) contact.socialLink = socialLink;
+    if (tagline) contact.tagline = tagline;
+
+    if (icon) {
+      const fileUri = getDataUri(icon);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri);
+      contact.icon = cloudResponse.secure_url; // Update icon URL
+    }
+
+    await contact.save();
 
     res.status(200).json({
       message: "Contact updated successfully",
       success: true,
-      contact: updatedContact,
+      contact,
     });
   } catch (error) {
     console.error("Error editing contact:", error);

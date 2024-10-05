@@ -1,30 +1,17 @@
 import mongoose from "mongoose";
 
-const adminSchema = new mongoose.Schema({
-    username: {
-        type: String,
-        required: true,
-    },
-    email: {
-        type: String,
-        required: true,
-        
-    },
-    password: {
-        type: String,
-        required: true,
-    },
-    profilePic: {
-        type: String,
-        default: ""  // Default value for profilePic
-    },
-    bio: {
-        type: String,
-        maxlength: 2000  // Limits the bio to 200 characters
-    },
-    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }],
-}, {
-    timestamps: true  // Automatically adds createdAt and updatedAt fields
-});
+const adminSchema = new mongoose.Schema(
+  {
+    username: { type: String, required: true },
+    bio: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    profilePic: { type: String }, // For storing profile image URL
+    projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }], // Admin's projects
+  },
+  {
+    timestamps: true, // Automatically add createdAt and updatedAt fields
+  }
+);
 
 export const Admin = mongoose.model("Admin", adminSchema);

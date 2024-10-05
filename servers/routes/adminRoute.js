@@ -11,6 +11,11 @@ router.route('/login').post(adminController.login);
 router.route('/logout').post(adminController.logout);
 
 // Uncomment the editProfile route when ready
-router.route('/editProfile').post(authenticateAdmin,upload.single('profilePic') ,adminController.editProfile);
+router.route('/editProfile').put(authenticateAdmin,upload.single('profilePic') ,adminController.editProfile);
+router.get("/public/admindetails", adminController.getAdminDetails);
+router.get("/public/adminprojects", adminController.getAdminProjects);
+
+
+
 
 export default router;
