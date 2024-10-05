@@ -2,16 +2,25 @@ import GradualSpacing from "@/components/magicui/gradual-spacing";
 import ShineBorder from "@/components/magicui/shine-border";
 import { useSpring, animated } from "@react-spring/web";
 import { useTheme } from "../contexts/ThemeContext";
-import { BorderBeam } from "./magicui/border-beam";
 import TypingAnimation from "./magicui/typing-animation";
 import { useAdmin } from "@/contexts/publicViewContext";
-import { Button } from "./ui/button";
-import { Link } from "react-router-dom";
 import Footer from "./Footer";
 
 const Home = () => {
   const { isDarkMode } = useTheme();
   const { admin } = useAdmin();
+
+  const handleOpenPdf = () => {
+    if (admin.cv) {
+      const newTab = window.open(admin.cv, '_blank');
+      if (!newTab) {
+        alert('Please allow pop-ups for this website to open the CV.');
+      }
+    } else {
+      alert('No CV available');
+    }
+  };
+  
 
   // Animation hooks
   const h1Spring = useSpring({
@@ -40,7 +49,7 @@ const Home = () => {
   return (
     <>
       <div
-        className={` flex h-[120vh] items-center justify-center p-2 ${
+        className={`flex h-[120vh] items-center justify-center p-2 ${
           isDarkMode ? "bg-gray-900" : "bg-white"
         }`}
       >
@@ -51,12 +60,9 @@ const Home = () => {
             }`}
             style={{ height: isDarkMode ? "150vh" : "auto" }} // Adjust height for desktop view
           >
-            <div
-              className="flex 
-            flex-col items-start md:w-2/3"
-            >
+            <div className="flex flex-col items-start md:w-2/3">
               <h1
-                className={`text-4xl  md:text-9xl font-extrabold  ${
+                className={`text-4xl md:text-9xl font-extrabold ${
                   isDarkMode ? "text-white" : "text-gray-900"
                 }`}
               >
@@ -79,10 +85,7 @@ const Home = () => {
                   {admin.bio}
                 </p>
 
-                {/* <div className="flex flex-col">{admin.bio}</div> */}
-                <div className="">
-                  <Button>View my CV..</Button>
-                </div>
+              
               </animated.h3>
             </div>
             <div className="mb-2">
@@ -100,10 +103,15 @@ const Home = () => {
               </animated.div>
             </div>
           </ShineBorder>
-
-         
         </div>
       </div>
+      <button
+                  onClick={handleOpenPdf}
+                  className={`mt-4 px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600 transition duration-300`}
+                  aria-label="Open CV"
+                >
+                  Open CV
+                </button>
       <div>
         <Footer />
       </div>
@@ -112,40 +120,3 @@ const Home = () => {
 };
 
 export default Home;
-
-// <ShineBorder
-//   className="relative flex flex-col md:flex-row md:items-center md:justify-between h-screen w-full p-10 overflow-hidden rounded-lg border bg-background md:shadow-xl"
-//   color={["#A07CFE", "#FE8FB5", "#FFBE7B"]}
-// >
-//   {/* Text Section */}
-//   <div className="flex flex-col items-start text-left md:w-1/2 md:pr-8 mt-8 md:mt-0">
-//     <animated.h1
-//       style={h1Spring}
-//       className="text-4xl font-bold mb-4 text-gray-800 dark:text-white"
-//     >
-//
-//     </animated.h1>
-//     <animated.p
-//       style={pSpring}
-//       className="text-lg text-gray-600 dark:text-gray-300"
-//     >
-//       I am a Computer Science Engineering student passionate about building
-//       innovative web applications. Welcome to my portfolio!
-//       Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur quasi qui culpa ab eveniet? Aut at nisi deleniti fuga maiores, non, hic ex asperiores repudiandae, quibusdam explicabo veniam cupiditate rerum corporis laborum quia quam saepe? Aliquid facere ex tenetur vel nostrum optio earum nam amet!
-//     </animated.p>
-//   </div>
-
-//   {/* Photo Section */}
-//   <div className="flex justify-center items-center md:w-1/2">
-//     <animated.div
-//       style={imgSpring}
-//       className="w-40 h-40 rounded-full overflow-hidden border-4 border-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow-lg"
-//     >
-//       <img
-//         src="your-photo-url.jpg" // Replace with your photo URL
-//         alt="Abhay Yadav"
-//         className="object-cover w-full h-full"
-//       />
-//     </animated.div>
-//   </div>
-// </ShineBorder>

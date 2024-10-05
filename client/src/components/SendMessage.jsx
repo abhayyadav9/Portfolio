@@ -44,20 +44,28 @@ const SendMessage = () => {
           a message.
         </p>
 
-        {/* Send Message Form */}
         <section
-          className={`contact-section flex flex-col items-center justify-center p-4 ${
-            isDarkMode ? "bg-gray-800" : "bg-gray-100"
-          }`}
+          className={`contact-section flex flex-col items-center justify-center p-4
+             ${
+               isDarkMode
+                 ? "bg-gray-800 text-white"
+                 : "bg-gray-100 text-gray-800"
+             }`}
         >
           <form
-            className={`contact-form w-full max-w-md p-6 rounded shadow-md ${
-              isDarkMode ? "bg-gray-700" : "bg-white"
-            }`}
+            className={`contact-form w-full max-w-md  ${
+              isDarkMode
+                ? "bg-gray-700 text-white"
+                : "bg-gray-100 text-gray-800"
+            } p-6 rounded shadow-md`}
             action="https://api.web3forms.com/submit"
             method="POST"
           >
-            <input type="hidden" name="access_key" value="your-access-key" />
+            <input
+              type="hidden"
+              name="access_key"
+              value="b79b59a2-d593-4316-9612-d596cf757708"
+            />
             <input
               type="hidden"
               name="subject"
@@ -65,81 +73,82 @@ const SendMessage = () => {
             />
             <input type="hidden" name="from_name" value="My Website" />
 
-            <div className="form-group-container mb-2">
-              <div className="form-group mb-2">
+            <div className="form-group-container mb-4">
+              <div className="form-group mb-4">
                 <label
                   htmlFor="name"
-                  className={`form-label block text-sm font-bold mb-2 ${
-                    isDarkMode ? "text-white" : "text-gray-900"
-                  }`}
+                  className="form-label block text-sm font-bold mb-2"
                 >
                   Name
                 </label>
                 <input
                   id="name"
                   name="name"
-                  className={`form-input border rounded w-full py-2 px-3 ${
-                    isDarkMode ? "bg-gray-600 text-white" : "bg-white"
-                  }`}
+                  className={`form-input border rounded w-full py-2 px-3  
+                      ${
+                        isDarkMode
+                          ? " text-black "
+                          : "  text-white"
+                      } `}
                   placeholder="Your name"
                   type="text"
                   required
                 />
               </div>
-              <div className="form-group mb-2">
+              <div className="form-group mb-4">
                 <label
                   htmlFor="email"
-                  className={`form-label block text-sm font-bold mb-2 ${
-                    isDarkMode ? "text-white" : "text-gray-900"
-                  }`}
+                  className="form-label block text-sm font-bold mb-2"
                 >
                   Email
                 </label>
                 <input
                   id="email"
                   name="email"
-                  className={`form-input border rounded w-full py-2 px-3 ${
-                    isDarkMode ? "bg-gray-600 text-white" : "bg-white"
-                  }`}
-                  placeholder="Your email"
+                  className={`form-input border rounded w-full py-2 px-3  
+                    ${
+                      isDarkMode
+                        ? " text-black "
+                        : "  text-white"
+                    } `}                  placeholder="Your email"
                   type="email"
                   required
                 />
               </div>
-              <div className="form-group mb-2">
+              <div className="form-group mb-4">
                 <label
                   htmlFor="phone"
-                  className={`form-label block text-sm font-bold mb-2 ${
-                    isDarkMode ? "text-white" : "text-gray-900"
-                  }`}
+                  className="form-label block text-sm font-bold mb-2"
                 >
                   Phone
                 </label>
                 <input
                   id="phone"
                   name="phone"
-                  className={`form-input border rounded w-full py-2 px-3 ${
-                    isDarkMode ? "bg-gray-600 text-white" : "bg-white"
-                  }`}
-                  placeholder="+1 (234) 56789"
+                  className={`form-input border rounded w-full py-2 px-3  
+                    ${
+                      isDarkMode
+                        ? " text-black "
+                        : "  text-white"
+                    } `}                  placeholder="+1 (234) 56789"
                   type="text"
                   required
                 />
               </div>
-              <div className="form-group mb-2">
+              <div className="form-group mb-4">
                 <label
                   htmlFor="message"
-                  className={`form-label block text-sm font-bold mb-2 ${
-                    isDarkMode ? "text-white" : "text-gray-900"
-                  }`}
+                  className="form-label block text-sm font-bold mb-2"
                 >
                   Message
                 </label>
                 <textarea
-                  className={`form-textarea border rounded w-full py-2 px-3 ${
-                    isDarkMode ? "bg-gray-600 text-white" : "bg-white"
-                  }`}
-                  id="message"
+ className={`form-textarea border rounded w-full py-2 px-3  
+  ${
+    isDarkMode
+      ? " text-black "
+      : "  text-white"
+  } `}                  id="message"
                   name="message"
                   placeholder="Your message"
                   required
@@ -154,20 +163,16 @@ const SendMessage = () => {
             </button>
           </form>
         </section>
-
         <div className="mt-10">
           {/* Contact Information */}
           <h2 className="text-xl font-bold mb-2">Contact Information</h2>
 
-          <a
-            href="mailto:yadavabhay8227.com"
-            className="text-purple-600 "
-          >
+          <a href="mailto:yadavabhay8227.com" className="text-purple-600 ">
             Email: yadavabhay8227.com
           </a>
           <p className="mb-2"></p>
-          <a href="tel:+91 9263833367"  className="text-purple-600 ">
-           Phone:  +91 9263833367
+          <a href="tel:+91 9263833367" className="text-purple-600 ">
+            Phone: +91 9263833367
           </a>
 
           {/* Social Media Icons */}

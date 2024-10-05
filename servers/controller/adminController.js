@@ -220,7 +220,7 @@ import cloudinary from "../database/cloudinary.js";
 
 // Register Admin (Only allow one admin)
 
-
+// Register Admin (Only allow one admin)
 const register = async (req, res) => {
   try {
     // Check if an admin already exists
@@ -232,7 +232,9 @@ const register = async (req, res) => {
       });
     }
 
-    const { username, bio, email, password, profilePic } = req.body;
+    const { username, bio, email, password, } = req.body;
+    const cv = req.file; // Assuming you're using Multer to handle file uploads
+    const profilePic  = req.file;
 
     // Validate that all required fields are provided
     if (!username || !bio || !email || !password) {
@@ -245,6 +247,16 @@ const register = async (req, res) => {
     // Hash the password before saving it to the database
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Upload CV if provided
+    let cvUrl = "";
+    if (cv) {
+      const cvUri = getDataUri(cv); // Convert the file to a data URI
+      const cloudResponse = await cloudinary.uploader.upload(cvUri, {
+        resource_type: "raw", // Specify that it's a non-image file
+      });
+      cvUrl = cloudResponse.secure_url; // Get the URL of the uploaded CV
+    }
+
     // Create a new admin record in the database
     const newAdmin = new Admin({
       username,
@@ -252,6 +264,7 @@ const register = async (req, res) => {
       email,
       password: hashedPassword,
       profilePic: profilePic || "", // Optional field, default to empty string if not provided
+      cv: cvUrl, // Save the CV URL
     });
 
     await newAdmin.save();
@@ -269,6 +282,7 @@ const register = async (req, res) => {
     });
   }
 };
+
 
 
 
@@ -397,6 +411,7 @@ const register = async (req, res) => {
           email: admin.email,
           profilePic: admin.profilePic,
           bio: admin.bio,
+          cv: admin.cv
         },
       });
   } catch (error) {
@@ -433,28 +448,37 @@ const logout = async (_, res) => {
 // Edit Admin Profile
 const editProfile = async (req, res) => {
   try {
-    const adminId = req.id;
+    const adminId = req.id; // Ensure req.id is set by authenticateAdmin middleware
     const { username, email, bio } = req.body;
-    const profilePic = req.file;
 
-    let cloudResponse;
-    if (profilePic) {
-      const fileUri = getDataUri(profilePic);
-      cloudResponse = await cloudinary.uploader.upload(fileUri);
-    }
+    const profilePic = req.files['profilePic'] ? req.files['profilePic'][0] : null; // For profile picture
+    const cv = req.files['cv'] ? req.files['cv'][0] : null; // Handle CV file
 
     const admin = await Admin.findById(adminId).select("-password");
     if (!admin) {
-      return res
-        .status(404)
-        .json({ message: "Admin not found", success: false });
+      return res.status(404).json({ message: "Admin not found", success: false });
     }
 
-    // Update fields if provided
+    // Handle profile picture upload
+    if (profilePic) {
+      const fileUri = getDataUri(profilePic);
+      const cloudResponse = await cloudinary.uploader.upload(fileUri);
+      admin.profilePic = cloudResponse.secure_url; // Update profile pic URL
+    }
+
+    // Handle CV upload
+    if (cv) {
+      const cvUri = getDataUri(cv); // Convert the file to a data URI
+      const cloudResponseCv = await cloudinary.uploader.upload(cvUri, {
+        resource_type: "raw", // Specify that it's a non-image file
+      });
+      admin.cv = cloudResponseCv.secure_url; // Update CV URL
+    }
+
+    // Update other fields if provided
     if (bio) admin.bio = bio;
     if (email) admin.email = email;
     if (username) admin.username = username;
-    if (profilePic) admin.profilePic = cloudResponse.secure_url; // Update profile pic URL
 
     await admin.save();
 
@@ -471,6 +495,7 @@ const editProfile = async (req, res) => {
     });
   }
 };
+
 
 // Publicly accessible route to get admin details and their projects
 const getAdminDetails = async (req, res) => {

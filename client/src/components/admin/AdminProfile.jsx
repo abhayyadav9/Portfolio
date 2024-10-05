@@ -10,9 +10,11 @@ const AdminProfile = () => {
     bio: '',
     email: '',
     profilePic: '',
+    cv: '', // Add a field for the CV
   });
 
   const [profileImage, setProfileImage] = useState(null); // Store uploaded image file
+  const [cvFile, setCvFile] = useState(null); // Store uploaded CV file
   const [previewImage, setPreviewImage] = useState(''); // Store image preview URL
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -42,43 +44,57 @@ const AdminProfile = () => {
     }
   };
 
+  const handleCvChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCvFile(file); // Set CV file object
+    }
+  };
+
   const handleEditClick = () => {
     document.getElementById('profilePicInput').click(); // Trigger file input
+  };
+
+  const handleCvClick = () => {
+    document.getElementById('cvInput').click(); // Trigger CV file input
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError(null);
-
+  
     const formDataToSubmit = new FormData();
     formDataToSubmit.append('username', formData.username);
     formDataToSubmit.append('bio', formData.bio);
     formDataToSubmit.append('email', formData.email);
-
+  
     if (profileImage) {
-      formDataToSubmit.append('profilePic', profileImage); // Append the image file
+      formDataToSubmit.append('profilePic', profileImage); // For profile picture
     }
-
+  
+    // Ensure you are adding the CV file correctly
+    if (cvFile) { // Ensure you have a state for the CV file
+      formDataToSubmit.append('cv', cvFile); // Append the CV file with the correct field name
+    }
+  
+    console.log("Form data being submitted: ", Array.from(formDataToSubmit)); // Log form data
+  
     try {
       await axios.put('http://localhost:8000/api/v1/admin/editprofile', formDataToSubmit, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
-        withCredentials: true, // Ensure cookies are sent along with the request
+        withCredentials: true,
       });
       alert('Profile updated successfully');
     } catch (err) {
-      if (err.response && err.response.status === 401) {
-        setError('Unauthorized access. Please log in.');
-      } else {
-        setError('Error updating profile');
-      }
       console.error('Error updating profile:', err);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
     <div className="max-w-lg w-full mx-auto p-4 bg-white rounded-lg shadow-md">
@@ -110,6 +126,29 @@ const AdminProfile = () => {
             onChange={handleImageChange}
             style={{ display: 'none' }}
           />
+        </div>
+
+        {/* CV Section */}
+        <div className="mb-6 text-center">
+          <label htmlFor="cvInput" className="block text-sm font-medium text-gray-700 mb-2">
+            Upload CV (PDF only)
+          </label>
+          <button
+            type="button"
+            onClick={handleCvClick}
+            className="inline-flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50"
+          >
+            Upload CV
+          </button>
+          <input
+            type="file"
+            id="cvInput"
+            name="cvFile"
+            accept="application/pdf"
+            onChange={handleCvChange}
+            style={{ display: 'none' }}
+          />
+          {cvFile && <p className="mt-2 text-sm text-gray-600">CV: {cvFile.name}</p>}
         </div>
 
         {/* Username */}

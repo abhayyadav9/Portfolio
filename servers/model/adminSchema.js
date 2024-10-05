@@ -8,6 +8,7 @@ const adminSchema = new mongoose.Schema(
     password: { type: String, required: true },
     profilePic: { type: String }, // For storing profile image URL
     projects: [{ type: mongoose.Schema.Types.ObjectId, ref: "Project" }], // Admin's projects
+    cv: { type: String ,default:""}, // For storing the CV URL or file path
   },
   {
     timestamps: true, // Automatically add createdAt and updatedAt fields
