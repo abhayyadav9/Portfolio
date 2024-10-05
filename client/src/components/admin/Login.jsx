@@ -21,7 +21,7 @@ export const Login = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "http://localhost:8000/api/v1/admin/login",
+        "https://abhay-portfolio-ky57.vercel.app/api/v1/admin/login",
         input,
         {
           headers: {

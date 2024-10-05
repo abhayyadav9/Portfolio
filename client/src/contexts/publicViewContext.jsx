@@ -11,12 +11,12 @@ export const AdminProvider = ({ children }) => {
 
   useEffect(() => {
     // Fetch admin details
-    axios.get('http://localhost:8000/api/v1/admin/public/admindetails')
+    axios.get('https://abhay-portfolio-ky57.vercel.app/api/v1/admin/public/admindetails')
       .then((res) => setAdmin(res.data.admin))
       .catch((err) => console.error(err));
 
     // Fetch projects separately
-    axios.get('http://localhost:8000/api/v1/admin/public/adminprojects')
+    axios.get('https://abhay-portfolio-ky57.vercel.app/api/v1/admin/public/adminprojects')
       .then((res) => setProjects(res.data.projects))
       .catch((err) => console.error(err));
   }, []);

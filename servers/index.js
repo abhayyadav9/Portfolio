@@ -13,7 +13,7 @@ const app = express(); // Missing app initialization
 app.use(cookieParser());  // Add cookie-parser middleware here
 
 const corsConfig = {
-  origin: "http://localhost:5173",
+  origin: "https://abhay-portfolio-ky57.vercel.app/",
   credentials: true,
 };
 

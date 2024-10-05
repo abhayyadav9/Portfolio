@@ -32,7 +32,7 @@ export function ProjectDialog({ project, onClose, onSave }) {
       }
 
       const response = await axios.put(
-        `http://localhost:8000/api/v2/project/editproject/${project._id}`,
+        `https://abhay-portfolio-ky57.vercel.app/api/v2/project/editproject/${project._id}`,
         formData,
         { 
           headers: {

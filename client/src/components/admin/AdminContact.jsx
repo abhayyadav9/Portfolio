@@ -10,7 +10,7 @@ const AdminContact = () => {
 
   useEffect(() => {
     // Fetch all contacts when the component mounts
-    axios.get('http://localhost:8000/api/v3/contact/getcontact', {
+    axios.get('https://abhay-portfolio-ky57.vercel.app/api/v3/contact/getcontact', {
       withCredentials: true
     })
       .then(response => setContacts(response.data.contacts))
@@ -26,7 +26,7 @@ const AdminContact = () => {
     if (file) formData.append('icon', file);
 
     try {
-      await axios.post('http://localhost:8000/api/v3/contact/addcontact', formData, {
+      await axios.post('https://abhay-portfolio-ky57.vercel.app/api/v3/contact/addcontact', formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -35,7 +35,7 @@ const AdminContact = () => {
       // Clear form and refetch contacts
       setNewContact({ socialMedia: '', socialLink: '', tagline: '' });
       setFile(null);
-      const response = await axios.get('http://localhost:8000/api/v3/contact/getcontact', {
+      const response = await axios.get('https://abhay-portfolio-ky57.vercel.app/api/v3/contact/getcontact', {
         withCredentials: true
       });
       setContacts(response.data.contacts);
@@ -53,7 +53,7 @@ const AdminContact = () => {
     if (file) formData.append('icon', file);
 
     try {
-      await axios.put(`http://localhost:8000/api/v3/contact/editcontact/${editContactId}`, formData, {
+      await axios.put(`https://abhay-portfolio-ky57.vercel.app/api/v3/contact/editcontact/${editContactId}`, formData, {
         headers: {
           'Content-Type': 'multipart/form-data'
         },
@@ -63,7 +63,7 @@ const AdminContact = () => {
       setEditContactId(null);
       setEditContact({ socialMedia: '', socialLink: '', tagline: '' });
       setFile(null);
-      const response = await axios.get('http://localhost:8000/api/v3/contact/getcontact', {
+      const response = await axios.get('https://abhay-portfolio-ky57.vercel.app/api/v3/contact/getcontact', {
         withCredentials: true
       });
       setContacts(response.data.contacts);
@@ -74,11 +74,11 @@ const AdminContact = () => {
 
   const handleDeleteContact = async (contactId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/v3/contact/deletecontact/${contactId}`, {
+      await axios.delete(`https://abhay-portfolio-ky57.vercel.app/api/v3/contact/deletecontact/${contactId}`, {
         withCredentials: true
       });
       // Refetch contacts
-      const response = await axios.get('http://localhost:8000/api/v3/contact/getcontact', {
+      const response = await axios.get('https://abhay-portfolio-ky57.vercel.app/api/v3/contact/getcontact', {
         withCredentials: true
       });
       setContacts(response.data.contacts);
