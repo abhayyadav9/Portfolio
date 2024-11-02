@@ -58,7 +58,7 @@ const ProjectCard = ({ project }) => {
           className="mt-2 text-xl sm:text-2xl lg:text-3xl font-semibold text-transparent bg-gradient-to-r from-orange-400 via-pink-500 to-purple-600 bg-clip-text animate-pulse text-center lg:text-left"
           variants={textVariants}
         >
-          {project.projectName}
+          {project?.projectName}
         </motion.h3>
 
         <motion.p
@@ -93,9 +93,9 @@ const ProjectCard = ({ project }) => {
         </motion.h4>
 
         <div>
-          <Button onClick={() => handleProjectClick(project)}>
+          {/* <Button onClick={() => handleProjectClick(project)}>
             View
-          </Button>
+          </Button> */}
         </div>
       </NeonGradientCard>
     </motion.div>

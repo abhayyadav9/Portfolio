@@ -36,7 +36,7 @@ const Contact = () => {
             : "bg-gray-900"
         }`}
       >
-        <div className="mt-20">
+        <div className="mt-0">
           <SendMessage />
         </div>
       </div>

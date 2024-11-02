@@ -75,7 +75,7 @@ const admin="abhat"
                 />
                 <GradualSpacing
                   className="font-display text-center text-4xl font-bold tracking-[-0.1em] text-black dark:text-white md:text-7xl md:leading-[5rem]"
-                  text={`${adminDetail.username}`}
+                  text={`${adminDetail?.username}`}
                 />
               </h1>
               <animated.h3
@@ -85,7 +85,7 @@ const admin="abhat"
                 }`}
               >
                 <p className="p-2 md:p-9 text-justify text-lg font-medium">
-                  {adminDetail.bio}
+                  {adminDetail?.bio}
                 </p>
               </animated.h3>
             </div>
@@ -97,7 +97,7 @@ const admin="abhat"
                 } shadow-lg mb-4 md:mb-0`}
               >
                 <img
-                  src={adminDetail.profilePic || "https://via.placeholder.com/150"}
+                  src={adminDetail?.profilePic || "https://via.placeholder.com/150"}
                   alt="Profile Pic"
                   className="w-full h-full object-cover"
                 />

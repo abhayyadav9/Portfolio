@@ -41,7 +41,7 @@ const ProjectDetail = () => {
             Explore the details of this amazing project.
           </p>
 
-          <div className="flex flex-auto w-full" >
+          <div className="flex flex-auto w-full">
             <div className="text-left w-full space-y-4">
               <h2
                 className={`text-2xl font-semibold ${
@@ -78,7 +78,24 @@ const ProjectDetail = () => {
               </div>
             </div>
             <div>
-              {/* {selectProject?.projectImage && (
+
+            {/* {
+  selectProject?.projectImage.map((image, index) => {
+    return (
+      <div key={index} className="overflow-hidden rounded-lg shadow-lg">
+        <img
+          src={image}
+          alt={`Project ${index + 1}`}
+          className={`w-full h-64 object-cover transition-transform duration-500 ${
+            isDarkMode ? "hover:scale-105 rounded-lg" : ""
+          }`}
+        />
+      </div>
+    );
+  })
+} */}
+
+              {selectProject?.projectImage && (
                 <div className="overflow-hidden rounded-lg shadow-lg">
                   <img
                     src={selectProject.projectImage}
@@ -88,8 +105,7 @@ const ProjectDetail = () => {
                     }`}
                   />
                 </div>
-              )} */}
-              <ProjectImage image={selectProject?.projectImage} />
+              )}
             </div>
           </div>
 
