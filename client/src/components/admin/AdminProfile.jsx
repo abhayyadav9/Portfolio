@@ -2,9 +2,11 @@ import { useAdmin } from '@/contexts/publicViewContext';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { MdOutlineEdit } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
 const AdminProfile = () => {
-  const { admin } = useAdmin();
+  const adminDetail = useSelector((state) => state.auth.adminDetail);
+
   const [formData, setFormData] = useState({
     username: '',
     bio: '',
@@ -20,16 +22,16 @@ const AdminProfile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (admin) {
+    if (adminDetail) {
       setFormData({
-        username: admin.username || '',
-        bio: admin.bio || '',
-        email: admin.email || '',
-        profilePic: admin.profilePic || '',
+        username:adminDetail.username || '',
+        bio: adminDetail.bio || '',
+        email: adminDetail.email || '',
+        profilePic: adminDetail.profilePic || '',
       });
-      setPreviewImage(admin.profilePic || '');
+      setPreviewImage(adminDetail.profilePic || '');
     }
-  }, [admin]);
+  }, [adminDetail]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
