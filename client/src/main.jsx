@@ -1,31 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import App from "./App";
-import "./index.css"; // Import your global styles
-import { ThemeProvider } from "./contexts/ThemeContext";
-import { PersistGate } from "redux-persist/integration/react";
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
 import { Provider } from "react-redux";
-import store from "./redux/store"; // Assuming this is the correct path to your store
-import { persistStore } from "redux-persist"; // Correctly importing persistStore
-import { AdminProvider } from "./contexts/publicViewContext";
+import store from "./redux/store.js";
+import { persistStore } from "redux-persist";
+import { PersistGate } from "redux-persist/integration/react";
+import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 
-// Create the persistor instance
 const persistor = persistStore(store);
 
-// Create the root element
-const root = ReactDOM.createRoot(document.getElementById("root"));
-
-// Render the App component inside the root element
-root.render(
-  <React.StrictMode>
+createRoot(document.getElementById("root")).render(
+  <StrictMode>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <AdminProvider>
         <ThemeProvider>
           <App />
         </ThemeProvider>
-        </AdminProvider>
       </PersistGate>
     </Provider>
-  </React.StrictMode>
+  </StrictMode>
 );

@@ -9,15 +9,11 @@ import contactRoute from "./routes/contactRoute.js"
 import cookieParser from "cookie-parser";
 
 
-const app = express(); // Missing app initialization
-app.use(cookieParser());  // Add cookie-parser middleware here
+const app = express(); 
+app.use(cookieParser()); 
 
-const corsConfig = {
-  origin: "https://abhay-portfolio-ky57.vercel.app/",
-  credentials: true,
-};
+app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:5173", credentials: true }));
 
-app.use(cors(corsConfig));
 app.use(express.json());
 dotenv.config()
 

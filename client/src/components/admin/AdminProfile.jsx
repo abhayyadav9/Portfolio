@@ -81,7 +81,7 @@ const AdminProfile = () => {
     console.log("Form data being submitted: ", Array.from(formDataToSubmit)); // Log form data
   
     try {
-      await axios.put('https://abhay-portfolio-ky57.vercel.app/api/v1/admin/editprofile', formDataToSubmit, {
+      await axios.put('http://localhost:8000/api/v1/admin/editprofile', formDataToSubmit, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

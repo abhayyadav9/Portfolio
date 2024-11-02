@@ -6,6 +6,7 @@ import Contact from "./components/Contact";
 import Project from "./components/Project";
 import AdminHome from "./components/admin/AdminHome";
 import { Login } from "./components/admin/Login";
+import ProjectDetail from "./components/ProjectDetail";
 
 function App() {
   return (
@@ -26,6 +27,8 @@ function Layout() {
         <Route path="/" element={<Home />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/project" element={<Project />} />
+        <Route path="/view-project" element={<ProjectDetail />} />
+
         <Route path="/admin/home/*" element={<AdminHome />} />
         <Route path="/admin/login" element={<Login />} />
       </Routes>

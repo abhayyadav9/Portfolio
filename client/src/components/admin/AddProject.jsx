@@ -13,7 +13,7 @@ const AddProject = () => {
   // Function to fetch projects from your API
   const fetchProjects = async () => {
     try {
-      const response = await axios.get('https://abhay-portfolio-ky57.vercel.app/api/v2/project/getprojects', {
+      const response = await axios.get('http://localhost:8000/api/v2/project/getprojects', {
         withCredentials: true,
       });
       setProjects(response.data.projects); // Assuming API returns a 'projects' array
@@ -45,7 +45,7 @@ const AddProject = () => {
     if (projectImage) formData.append('projectImage', projectImage);
 
     try {
-      const response = await axios.post('https://abhay-portfolio-ky57.vercel.app/api/v2/project/addproject', formData, {
+      const response = await axios.post('http://localhost:8000/api/v2/project/addproject', formData, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },

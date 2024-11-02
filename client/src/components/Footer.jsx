@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-3">
+    <footer className="  mb-0 bg-gradient-to-r from-purple-500 to-indigo-500 text-white py-3">
       <div className="container mx-auto px-4">
         {/* Divider */}
 
