@@ -1,6 +1,8 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import authSlice from "./authSlice";
 import projectSlice from "./projectSlice";
+import themeSlice from "./themeSlice";
+
 
 import {
     persistStore,
@@ -25,6 +27,8 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authSlice,
   project: projectSlice,
+  theme: themeSlice,
+
 });
 
 // Create persisted reducer

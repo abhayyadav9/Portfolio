@@ -5,7 +5,7 @@ import ProjectImage from "./ProjectImage";
 
 const ProjectDetail = () => {
   const { selectProject } = useSelector((store) => store.project);
-  const { isDarkMode } = useTheme();
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Access isDarkMode from Redux store
 
   return (
     <div

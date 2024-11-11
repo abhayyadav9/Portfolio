@@ -9,10 +9,10 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { useTheme } from "@/contexts/themeContext";
+import { useSelector } from "react-redux";
 
 const ProjectDialog = ({ isOpen, onClose, onAction, title, link, description, image }) => {
-  const { isDarkMode } = useTheme(); // Accessing theme context
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Access isDarkMode from Redux store
 
   return (
     <AlertDialog open={isOpen} onOpenChange={onClose}> {/* Close when clicking outside */}

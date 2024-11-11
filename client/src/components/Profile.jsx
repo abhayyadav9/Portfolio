@@ -8,7 +8,8 @@ import { useSelector } from "react-redux";
 import useGetAdminDetail from "./hooks/useGetAdminDetail";
 
 const Profile = () => {
-  const { isDarkMode } = useTheme();
+  const isDarkMode = useSelector((state) => state.theme.isDarkMode); // Access isDarkMode from Redux store
+
 const adminDetail = useSelector((state) => state.auth.adminDetail);
 
 
@@ -59,7 +60,7 @@ const admin="abhat"
 
           <ShineBorder
             className={`flex md:mt-0 mt-[-30vh] flex-col-reverse h-screen  md:flex-row gap-8 items-center w-full max-w-6xl rounded-xl shadow-lg ${
-              isDarkMode ? "bg-gray-200" : "bg-gray-50"
+              isDarkMode ? "bg-gray-900" : "bg-gray-50"
             }`}
             style={{ height: isDarkMode ? "150vh" : "auto" }} // Adjust height for desktop view
           >
@@ -74,7 +75,7 @@ const admin="abhat"
                   text=" "
                 />
                 <GradualSpacing
-                  className="font-display text-center text-4xl font-bold tracking-[-0.1em] text-black dark:text-white md:text-7xl md:leading-[5rem]"
+                  className="font-display text-center text-4xl font-bold tracking-[-0.1em] md:text-7xl md:leading-[5rem]"
                   text={`${adminDetail?.username}`}
                 />
               </h1>

@@ -7,10 +7,10 @@ import {
   FaLinkedin,
   FaGithub,
 } from "react-icons/fa";
-import { useTheme } from "@/contexts/themeContext"; // Assuming you have a theme context
+import { useSelector } from "react-redux";
 
 const SendMessage = () => {
-  const { isDarkMode } = useTheme(); // Fetching theme context to toggle between dark and light mode
+  const { isDarkMode } = useSelector((store) => store.theme);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -85,11 +85,7 @@ const SendMessage = () => {
                   id="name"
                   name="name"
                   className={`form-input border rounded w-full py-2 px-3  
-                      ${
-                        isDarkMode
-                          ? " text-black "
-                          : "  text-white"
-                      } `}
+                      ${isDarkMode ? " text-black " : "  text-white"} `}
                   placeholder="Your name"
                   type="text"
                   required
@@ -106,11 +102,8 @@ const SendMessage = () => {
                   id="email"
                   name="email"
                   className={`form-input border rounded w-full py-2 px-3  
-                    ${
-                      isDarkMode
-                        ? " text-black "
-                        : "  text-white"
-                    } `}                  placeholder="Your email"
+                    ${isDarkMode ? " text-black " : "  text-white"} `}
+                  placeholder="Your email"
                   type="email"
                   required
                 />
@@ -126,11 +119,8 @@ const SendMessage = () => {
                   id="phone"
                   name="phone"
                   className={`form-input border rounded w-full py-2 px-3  
-                    ${
-                      isDarkMode
-                        ? " text-black "
-                        : "  text-white"
-                    } `}                  placeholder="+1 (234) 56789"
+                    ${isDarkMode ? " text-black " : "  text-white"} `}
+                  placeholder="+1 (234) 56789"
                   type="text"
                   required
                 />
@@ -143,12 +133,9 @@ const SendMessage = () => {
                   Message
                 </label>
                 <textarea
- className={`form-textarea border rounded w-full py-2 px-3  
-  ${
-    isDarkMode
-      ? " text-black "
-      : "  text-white"
-  } `}                  id="message"
+                  className={`form-textarea border rounded w-full py-2 px-3  
+  ${isDarkMode ? " text-black " : "  text-white"} `}
+                  id="message"
                   name="message"
                   placeholder="Your message"
                   required
@@ -178,7 +165,7 @@ const SendMessage = () => {
           {/* Social Media Icons */}
           <div className="flex space-x-4 mt-4 justify-between">
             <a
-              href="https://www.facebook.com"
+              href="https://www.facebook.com/abhay45yadav"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -198,7 +185,7 @@ const SendMessage = () => {
               />
             </a>
             <a
-              href="https://www.instagram.com"
+              href="https://www.instagram.com/abhay45ray"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -208,7 +195,7 @@ const SendMessage = () => {
               />
             </a>
             <a
-              href="https://www.linkedin.com"
+              href="https://www.linkedin.com/in/abhay-yadav-305853268/"
               target="_blank"
               rel="noopener noreferrer"
             >
@@ -218,7 +205,7 @@ const SendMessage = () => {
               />
             </a>
             <a
-              href="https://www.github.com"
+              href="https://www.github.com/abhayyadav9"
               target="_blank"
               rel="noopener noreferrer"
             >
