@@ -52,14 +52,14 @@ const admin="abhat"
   return (
     <>
       <div
-        className={`flex items-center justify-center  ${
+        className={`flex items-center justify-center h-screen w-full mt-22 ${
           isDarkMode ? "bg-gray-900" : "bg-white"
         }`}
       >
         <div className="p-1 max-w-7xl mx-auto">
 
           <ShineBorder
-            className={`flex md:mt-0 mt-[-30vh] flex-col-reverse h-screen  md:flex-row gap-8 items-center w-full max-w-6xl rounded-xl shadow-lg ${
+            className={`flex flex-col-reverse h-screen  md:flex-row gap-8 items-center w-full max-w-6xl rounded-xl shadow-lg ${
               isDarkMode ? "bg-gray-900" : "bg-gray-50"
             }`}
             style={{ height: isDarkMode ? "150vh" : "auto" }} // Adjust height for desktop view

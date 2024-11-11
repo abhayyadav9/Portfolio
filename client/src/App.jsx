@@ -1,5 +1,10 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Contact from "./components/Contact";
@@ -22,16 +27,18 @@ function Layout() {
 
   return (
     <div>
-      {!isAdminRoute && <Navbar />}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/project" element={<Project />} />
-        <Route path="/view-project" element={<ProjectDetail />} />
+      <div>{!isAdminRoute && <Navbar />}</div>
+      <div>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/project" element={<Project />} />
+          <Route path="/view-project" element={<ProjectDetail />} />
 
-        <Route path="/admin/home/*" element={<AdminHome />} />
-        <Route path="/admin/login" element={<Login />} />
-      </Routes>
+          <Route path="/admin/home/*" element={<AdminHome />} />
+          <Route path="/admin/login" element={<Login />} />
+        </Routes>
+      </div>
     </div>
   );
 }
