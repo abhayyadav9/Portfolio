@@ -19,7 +19,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "npm install && nodemon index.js"
   },
   "keywords": [],
   "author": "",
