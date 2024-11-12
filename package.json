@@ -4,11 +4,14 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start": "npm install && node servers/index.js",
+        "start": "npm install && nodemon servers/index.js",
         "dev": "nodemon index.js"
-      },
+    },
     "keywords": [],
     "author": "",
     "license": "ISC",
-    "description": ""
+    "description": "",
+    "dependencies": {
+        "nodemon": "^3.1.7"
+    }
 }
