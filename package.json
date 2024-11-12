@@ -4,7 +4,7 @@
     "main": "index.js",
     "type": "module",
     "scripts": {
-        "start": "npm install && nodemon servers/index.js",
+        "start": "npm install && node servers/index.js",
         "dev": "nodemon index.js"
       },
     "keywords": [],
