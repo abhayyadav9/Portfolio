@@ -5,8 +5,7 @@
     "type": "module",
     "scripts": {
         "start": "npm install && nodemon servers/index.js",
-        "dev": "nodemon index.js",
-        "install": "node"
+        "dev": "nodemon index.js"
       },
     "keywords": [],
     "author": "",
