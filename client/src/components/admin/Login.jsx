@@ -21,7 +21,7 @@ export const Login = () => {
     try {
       setLoading(true);
       const res = await axios.post(
-        "https://abhay-portfolio-orpin.vercel.app/api/v1/admin/login",
+        "https://portfolio-servers.onrender.com/api/v1/admin/login",
         input,
         {
           headers: {

@@ -7,7 +7,7 @@ const AdminNavBar = () => {
 
   const logoutHandle = async () => {
     try {
-      await axios.post('https://abhay-portfolio-orpin.vercel.app/api/v1/admin/logout', {}, { withCredentials: true });
+      await axios.post('https://portfolio-servers.onrender.com/api/v1/admin/logout', {}, { withCredentials: true });
       navigate('/admin/login');
     } catch (error) {
       console.error('Logout error:', error);

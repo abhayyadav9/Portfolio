@@ -11,7 +11,7 @@ const useGetAdminDetail = () => {
     const fetchAdminDetail = async () => {
       try {
         const response = await axios.get(
-          "https://abhay-portfolio-orpin.vercel.app/api/v1/admin/public/admindetails"
+          "https://portfolio-servers.onrender.com/api/v1/admin/public/admindetails"
         );
         console.log(response.data.admin);
         dispatch(setAdminDetail(response.data.admin));

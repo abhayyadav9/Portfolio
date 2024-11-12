@@ -32,7 +32,7 @@ export function ProjectDialog({ project, onClose, onSave }) {
       }
 
       const response = await axios.put(
-        `https://abhay-portfolio-orpin.vercel.app/api/v2/project/editproject/${project._id}`,
+        `https://portfolio-servers.onrender.com/api/v2/project/editproject/${project._id}`,
         formData,
         { 
           headers: {

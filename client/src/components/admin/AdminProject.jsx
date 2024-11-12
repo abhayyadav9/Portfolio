@@ -19,7 +19,7 @@
 //   const fetchAdminProfile = async () => {
 //    try {
 //     const response = await axios.get(
-//       "https://abhay-portfolio-orpin.vercel.app/api/v2/project/getadminprofile",
+//       "https://portfolio-servers.onrender.com/api/v2/project/getadminprofile",
 //       { withCredentials: true }
 //     );
 //     const { admin } = response.data;
@@ -34,7 +34,7 @@
 //   const deleteHandler = async (projectId) => {
 //    try {
 //     const response = await axios.delete(
-//       `https://abhay-portfolio-orpin.vercel.app/api/v2/project/${projectId}`,
+//       `https://portfolio-servers.onrender.com/api/v2/project/${projectId}`,
 //       { withCredentials: true }
 //     );
 //     if (response.data.success) {
@@ -158,7 +158,7 @@ const AdminProject = () => {
   const fetchAdminProfile = async () => {
     try {
       const response = await axios.get(
-        "https://abhay-portfolio-orpin.vercel.app/api/v2/project/getadminprofile",
+        "https://portfolio-servers.onrender.com/api/v2/project/getadminprofile",
         { withCredentials: true }
       );
       const { admin } = response.data;
@@ -177,7 +177,7 @@ const AdminProject = () => {
   const deleteHandler = async (projectId) => {
     try {
       const response = await axios.delete(
-        `https://abhay-portfolio-orpin.vercel.app/api/v2/project/deleteproject/${projectId}`,
+        `https://portfolio-servers.onrender.com/api/v2/project/deleteproject/${projectId}`,
         { withCredentials: true }
       );
       if (response.data.success) {
